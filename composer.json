@@ -1,0 +1,17 @@
+{
+    "name": "dev4/projeto_pratico",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lucashenriqueadapt",
+            "email": "lucas.henrique@adaptweb.com.br"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    }
+}
