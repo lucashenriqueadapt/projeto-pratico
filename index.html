@@ -7,24 +7,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
-            <h3 class="text-center mb-4">Login</h3>
-            <form>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Digite seu email" required>
+    <app id="VueAppInstanceLogin">
+        <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+            <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
+                <h3 class="text-center mb-4">Login</h3>
+                <form v-on:submit.prevent="loginUser">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" v-model="login.email" placeholder="Digite seu email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="senha" v-model="login.password" placeholder="Digite sua senha" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="cadastro.html">Não tem uma conta? Cadastre-se</a>
                 </div>
-                <div class="mb-3">
-                    <label for="senha" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="senha" placeholder="Digite sua senha" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Entrar</button>
-            </form>
-            <div class="text-center mt-3">
-                <a href="cadastro.html">Não tem uma conta? Cadastre-se</a>
             </div>
         </div>
-    </div>
+    </app>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="frontLogin.js"></script>
 </body>
 </html>

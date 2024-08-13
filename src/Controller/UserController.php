@@ -16,8 +16,10 @@ class UserController
 
     public function login(): array
     {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $dados = json_decode($_POST['dados']);
+        $email = $dados->email;
+        $password = $dados->password;
+
 
         return $this->userService->login($email, $password);
     }

@@ -23,7 +23,7 @@ class UserRepository
 
         if (!password_verify($password, $user['senha'])) {
             return [
-                'status' => 'error',
+                'status' => 404,
                 'message' => 'Email ou senha inválidos.',
             ];
         }
@@ -47,7 +47,7 @@ class UserRepository
 
 
         return [
-            'status' => 'success',
+            'status' => 200,
             'message' => 'Login bem-sucedido.',
             'jwt' => $jwt
         ];
