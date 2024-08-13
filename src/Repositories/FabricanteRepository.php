@@ -13,7 +13,7 @@ class FabricanteRepository
 
     public function getFabricantes(): array
     {
-        return $this->conexao->query('SELECT * FROM fabricante')->fetchAll(PDO::FETCH_ASSOC);
+        return $this->conexao->query('SELECT idfabricante, nome FROM fabricante')->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

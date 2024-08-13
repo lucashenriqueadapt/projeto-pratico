@@ -31,11 +31,12 @@ class CarsController
 
     public function saveCar()
     {
+        $data = json_decode($_POST['data']);
         $dados = [
-            'modelo' => $_POST['modelo'],
-            'fabricante' => $_POST['fabricante'],
-            'veiculo' => $_POST['veiculo'],
-            'ano' => $_POST['ano']
+            'modelo' => $data['modelo'],
+            'fabricante' => $data['fabricante'],
+            'veiculo' => $data['veiculo'],
+            'ano' => $data['ano']
         ];
         return $this->carsServices->saveCar($dados);
     }

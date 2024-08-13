@@ -26,9 +26,10 @@ class UserController
 
     public function cadastro(): array
     {
-        $nome = $_POST['nome'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $dados = json_decode($_POST['dados']);
+        $nome = $dados->nome;
+        $email = $dados->email;
+        $password = $dados->password;
         return $this->userService->cadastro($nome, $email, $password);
     }
 }

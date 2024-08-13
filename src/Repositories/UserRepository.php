@@ -62,7 +62,7 @@ class UserRepository
 
         if ($user) {
             return [
-                'status' => 'error',
+                'status' => 404,
                 'message' => 'Email ja existe.',
             ];
         }   
@@ -71,7 +71,7 @@ class UserRepository
         $stmt->execute([$nome, $email, password_hash($password, PASSWORD_DEFAULT)]);
 
         return [
-            'status' => 'success',
+            'status' => 200,
             'message' => 'Usário criado com sucesso.',
         ];
     }

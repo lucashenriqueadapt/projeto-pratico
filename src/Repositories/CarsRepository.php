@@ -46,7 +46,7 @@ class CarsRepository
 
     public function saveCar(array $dados)
     {
-        $stmt = $this->conexao->prepare("INSERT INTO cars (modelo, idfabricante, idveiculo, ano) VALUES (?,?,?,?)");
+        $stmt = $this->conexao->prepare("INSERT INTO cars (modelo, idfabricante, idveiculo, anofabricacao) VALUES (?,?,?,?)");
         $stmt->execute([$dados['modelo'], $dados['fabricante'], $dados['veiculo'], $dados['ano']]);
         return [
             "status" => "success",

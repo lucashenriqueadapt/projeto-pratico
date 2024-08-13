@@ -13,7 +13,7 @@ class VeiculosRepository
 
     public function getVeiculos(): array
     {
-        return $this->conexao->query('SELECT * FROM veiculo')->fetchAll(PDO::FETCH_ASSOC);
+        return $this->conexao->query('SELECT idveiculo, nome, idfabricante FROM veiculo')->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

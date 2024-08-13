@@ -13,25 +13,40 @@ function dispararRequisicao(
         });
 }
 
-function login() {
-    const formData = new FormData();
-    formData.append("acao", "login");
-    formData.append("email", "henrique@gmail.com");
-    formData.append("password", "lucas00123");
+const { createApp } = Vue
 
-    dispararRequisicao(formData, (data) => {
-        console.log(data);
-    })
-}
+createApp({
+    data() {
+        return {
+            cadastro: {
+                nome: "",
+                email: "",
+                password: ""
+            }
+        }
+    },
+    methods: {
+        cadastroUser() {
+            const formData = new FormData();
+            formData.append("acao", "cadastro")
+            formData.append("dados", JSON.stringify(this.cadastro));
+            dispararRequisicao(formData, (data) => {
+                if (data.status == 200) {
+                    window.location.href = './index.html';
+                }
+            })
+        }
+    }
+}).mount('#VueAppInstanceCadastro')
 
-function cadastro() {
-    const formData = new FormData();
-    formData.append("acao", "cadastro");
-    formData.append("nome", "lucas");
-    formData.append("email", "henrique@gmail.com");
-    formData.append("password", "lucas00123");
+// function cadastro() {
+//     const formData = new FormData();
+//     formData.append("acao", "cadastro");
+//     formData.append("nome", "lucas");
+//     formData.append("email", "henrique@gmail.com");
+//     formData.append("password", "lucas00123");
 
-    dispararRequisicao(formData, (data) => {
-        console.log(data);
-    })
-}
+//     dispararRequisicao(formData, (data) => {
+//         console.log(data);
+//     })
+// }
