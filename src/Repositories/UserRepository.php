@@ -27,7 +27,7 @@ class UserRepository
                 'message' => 'Email ou senha inválidos.',
             ];
         }
-        $secretKey = 'your-secret-key';
+        $secretKey = 'loja';
         $host = $_SERVER['HTTP_HOST'];
 
         $payload = [

@@ -41,5 +41,9 @@ echo json_encode(match ($_POST['acao'] ?? $_GET['acao']) {
     "getFabricantes" => $fabricanteControl->getFabricantes(),
     "getVeiculos"    => $veiculoControl->getVeiculos(),
     "cadastroCar"    => $carsControl->saveCar(),
+    "getAllCars"     => $carsControl->getCars(),
+    "getOneCar"      => $carsControl->getCar(),
+    "updateCar"      => $carsControl->updateCar(),
+    "deleteCar"      => $carsControl->deleteCar(),
     default => throw new Exception('Ação Inválida:' . json_encode($_POST))
 });

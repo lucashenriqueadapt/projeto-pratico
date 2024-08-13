@@ -1,6 +1,8 @@
 <?
+
 namespace Controller;
 
+use Security\JWTAuthenticator;
 use Services\FabricanteServices;
 
 class FabricanteController
@@ -9,10 +11,12 @@ class FabricanteController
 
     public function __construct(FabricanteServices $fabricanteServices)
     {
-        $this->fabricanteServices = $fabricanteServices;
+        $token = JWTAuthenticator::verifyToken($_POST['token']);
+        if ($token['status'] == 401) return $token;
+        return $this->fabricanteServices = $fabricanteServices;
     }
 
-    public function getFabricantes():array
+    public function getFabricantes(): array
     {
         return $this->fabricanteServices->getFabricantes();
     }

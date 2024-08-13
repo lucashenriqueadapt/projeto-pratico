@@ -33,8 +33,10 @@ const vueAppInstance = createApp({
     methods: {
         getFabricantes() {
             const formData = new FormData();
+            formData.append("token", localStorage.getItem("token"))
             formData.append("acao", "getFabricantes")
             dispararRequisicao(formData, (data) => {
+                if(data.status == 401) return window.location.href = '../../index.html' 
                 this.models = data;
             })
         },

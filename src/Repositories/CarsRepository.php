@@ -14,7 +14,7 @@ class CarsRepository
 
     public function getCars()
     {
-        $stmt = $this->conexao->prepare("SELECT * FROM cars");
+        $stmt = $this->conexao->prepare("SELECT cars.idcars, cars.modelo, fabricante.nome as fabricante, veiculo.nome as veiculo, anofabricacao FROM cars JOIN fabricante ON cars.idfabricante = fabricante.idfabricante JOIN veiculo ON cars.idveiculo = veiculo.idveiculo WHERE cars.del = 0");
         $stmt->execute();
         $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return [
@@ -56,7 +56,7 @@ class CarsRepository
 
     public function updateCar(array $dados)
     {
-        $stmt = $this->conexao->prepare("UPDATE cars SET modelo = ?, idfabricante = ?, idveiculo = ?, ano = ? WHERE idcars = ?");
+        $stmt = $this->conexao->prepare("UPDATE cars SET modelo = ?, idfabricante = ?, idveiculo = ?, anofabricacao = ? WHERE idcars = ?");
         $stmt->execute([$dados['modelo'], $dados['fabricante'], $dados['veiculo'], $dados['ano'], $dados['id']]);
         return [
             "status" => "success",

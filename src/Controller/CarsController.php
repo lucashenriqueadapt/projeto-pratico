@@ -1,7 +1,9 @@
 <?
+
 namespace Controller;
 
 use Services\CarsServices;
+use Security\JWTAuthenticator;
 
 class CarsController
 {
@@ -14,6 +16,9 @@ class CarsController
 
     public function getCars()
     {
+        $token = JWTAuthenticator::verifyToken($_POST['token']);
+        if ($token['status'] == 401) return $token;
+        
         return $this->carsServices->getCars();
     }
 
@@ -31,27 +36,26 @@ class CarsController
 
     public function saveCar()
     {
-        $data = json_decode($_POST['data']);
+        $data = json_decode($_POST['dados']);
         $dados = [
-            'modelo' => $data['modelo'],
-            'fabricante' => $data['fabricante'],
-            'veiculo' => $data['veiculo'],
-            'ano' => $data['ano']
+            'modelo' => $data->modelo,
+            'fabricante' => $data->fabricante,
+            'veiculo' => $data->veiculo,
+            'ano' => $data->ano
         ];
         return $this->carsServices->saveCar($dados);
     }
 
     public function updateCar()
     {
+        $data = json_decode($_POST['dados']);
         $dados = [
-            'id' => $_POST['id'],
-            'modelo' => $_POST['modelo'],
-            'fabricante' => $_POST['fabricante'],
-            'veiculo' => $_POST['veiculo'],
-            'ano' => $_POST['ano']
+            'id' => $data->idcars,
+            'modelo' => $data->modelo,
+            'fabricante' => $data->idfabricante,
+            'veiculo' => $data->idveiculo,
+            'ano' => $data->anofabricacao
         ];
         return $this->carsServices->updateCar($dados);
     }
 }
-
-?>

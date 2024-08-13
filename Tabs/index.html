@@ -1,93 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listagem de Carros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-    <div class="container mt-5">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Início</li>
-            </ol>
-        </nav>
-        <div class="card shadow-lg">
-            <div class="card-body p-4">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Modelo</th>
-                            <th scope="col">Fabricante</th>
-                            <th scope="col">Tipo de Veículo</th>
-                            <th scope="col">Ano</th>
-                            <th scope="col">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Gol 16V</td>
-                            <td>Volkswagen</td>
-                            <td>Hatch</td>
-                            <td>2002</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Editar</button>
-                                <button class="btn btn-danger btn-sm">Excluir</button>
-                            </td>
-                        </tr>
-                        <!-- Adicione mais linhas conforme necessário -->
-                    </tbody>
-                </table>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <app id="VueAppInstanceListaCars">
+        <div class="container mt-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Início</li>
+                </ol>
+            </nav>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Listagem de Veículos</h2>
+                <a href="./cadastro/" class="btn btn-success">Novo Cadastro</a>
+            </div>
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Fabricante</th>
+                                <th scope="col">Tipo de Veículo</th>
+                                <th scope="col">Ano</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="car in cars" :key="car.idcars">
+                                <td>{{ car.modelo }}</td>
+                                <td>{{ car.fabricante }}</td>
+                                <td>{{ car.veiculo }}</td>
+                                <td>{{ car.anofabricacao }}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" @click="getOneCar(car.idcars)" data-bs-target="#editModal">Editar</button>
+                                    <button class="btn btn-danger btn-sm" @click="deleteCar(car.idcars)">Excluir</button>
+                                </td>
+                            </tr>
+                            <!-- Adicione mais linhas conforme necessário -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+        
 
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Editar Veículo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="modelo" class="form-label">Modelo</label>
-                            <input type="text" class="form-control" id="modelo" value="Gol 16V">
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Editar Veículo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form v-on:submit.prevent="updateCar">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="modelo" class="form-label">Modelo</label>
+                                <input type="text" class="form-control" id="modelo" v-model="carsEditar.modelo" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fabricante" class="form-label">Fabricante</label>
+                                <select class="form-select" id="fabricante" v-model="carsEditar.idfabricante" required>
+                                    <option v-for="model in models" :key="model.idfabricante" :value="model.idfabricante">
+                                        {{ model.nome }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tipoVeiculo" class="form-label">Tipo de Veículo</label>
+                                <select class="form-select" id="tipoVeiculo" v-model="carsEditar.idveiculo" required>
+                                    <option v-for="veiculo in filteredVeiculos" :key="veiculo.idveiculo" :value="veiculo.idveiculo">
+                                        {{ veiculo.nome }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ano" class="form-label">Ano</label>
+                                <input type="text" class="form-control" id="ano" v-model="carsEditar.anofabricacao" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="fabricante" class="form-label">Fabricante</label>
-                            <select class="form-select" id="fabricante">
-                                <option selected>Volkswagen</option>
-                                <option value="1">Fiat</option>
-                                <option value="2">Chevrolet</option>
-                                <!-- Adicione mais opções conforme necessário -->
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tipoVeiculo" class="form-label">Tipo de Veículo</label>
-                            <select class="form-select" id="tipoVeiculo">
-                                <option selected>Hatch</option>
-                                <option value="1">Sedan</option>
-                                <option value="2">SUV</option>
-                                <!-- Adicione mais opções conforme necessário -->
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ano" class="form-label">Ano</label>
-                            <input type="text" class="form-control" id="ano" value="2002">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Salvar</button>
-                </div>
             </div>
         </div>
-    </div>
+    </app>
 
+    <script src="./front.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
