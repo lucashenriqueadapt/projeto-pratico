@@ -17,8 +17,8 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas:
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
+   git clone https://github.com/lucashenriqueadapt/projeto-pratico
+   cd projeto-pratico
    ```
 
 2. **Instale as dependências do projeto:**
