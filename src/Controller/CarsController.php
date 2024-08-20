@@ -2,14 +2,15 @@
 
 namespace Controller;
 
-use Services\CarsServices;
+use Interfaces\Services\CarsInterface;
 use Security\JWTAuthenticator;
+use Mappers\CarsMapper;
 
 class CarsController
 {
     private $carsServices;
 
-    public function __construct(CarsServices $carsServices)
+    public function __construct(CarsInterface $carsServices)
     {
         $this->carsServices = $carsServices;
     }
@@ -36,26 +37,13 @@ class CarsController
 
     public function saveCar()
     {
-        $data = json_decode($_POST['dados']);
-        $dados = [
-            'modelo' => $data->modelo,
-            'fabricante' => $data->fabricante,
-            'veiculo' => $data->veiculo,
-            'ano' => $data->ano
-        ];
-        return $this->carsServices->saveCar($dados);
+        $cars = CarsMapper::assocObjDadosToCars(json_decode($_POST['dados']));
+        return $this->carsServices->saveCar($cars);
     }
 
     public function updateCar()
     {
-        $data = json_decode($_POST['dados']);
-        $dados = [
-            'id' => $data->idcars,
-            'modelo' => $data->modelo,
-            'fabricante' => $data->idfabricante,
-            'veiculo' => $data->idveiculo,
-            'ano' => $data->anofabricacao
-        ];
-        return $this->carsServices->updateCar($dados);
+        $cars = CarsMapper::assocObjDadosToCars(json_decode($_POST['dados']));
+        return $this->carsServices->updateCar($cars);
     }
 }

@@ -1,12 +1,14 @@
 <?
 namespace Services;
 
-use Repositories\CarsRepository;
+use Dtos\CarsDto;
+use Interfaces\Services\CarsInterface;
+use Interfaces\Repository\CarsInterface as RepositoryCarsInterface;
 
-class CarsServices
+class CarsServices implements CarsInterface
 {
     private $carsRepository;
-    public function __construct(CarsRepository $carsRepository)
+    public function __construct(RepositoryCarsInterface $carsRepository)
     {
         $this->carsRepository = $carsRepository;
     }
@@ -26,14 +28,14 @@ class CarsServices
         return $this->carsRepository->deleteCar($id);
     }
 
-    public function saveCar(array $dados)
+    public function saveCar(CarsDto $cars)
     {
-        return $this->carsRepository->saveCar($dados);
+        return $this->carsRepository->saveCar($cars);
     }
 
-    public function updateCar(array $dados)
+    public function updateCar(CarsDto $cars)
     {
-        return $this->carsRepository->updateCar($dados);
+        return $this->carsRepository->updateCar($cars);
     }
 }
 

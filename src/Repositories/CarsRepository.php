@@ -2,9 +2,11 @@
 
 namespace Repositories;
 
+use Dtos\CarsDto;
+use Interfaces\Repository\CarsInterface;
 use PDO;
 
-class CarsRepository
+class CarsRepository implements CarsInterface
 {
     private PDO $conexao;
     public function __construct(PDO $conexao)
@@ -44,20 +46,20 @@ class CarsRepository
         ];
     }
 
-    public function saveCar(array $dados)
+    public function saveCar(CarsDto $cars)
     {
         $stmt = $this->conexao->prepare("INSERT INTO cars (modelo, idfabricante, idveiculo, anofabricacao) VALUES (?,?,?,?)");
-        $stmt->execute([$dados['modelo'], $dados['fabricante'], $dados['veiculo'], $dados['ano']]);
+        $stmt->execute([$cars->modelo, $cars->fabricante, $cars->veiculo, $cars->ano]);
         return [
             "status" => "success",
             "message" => "Carro salvo com sucesso"
         ];
     }
 
-    public function updateCar(array $dados)
+    public function updateCar(CarsDto $cars)
     {
         $stmt = $this->conexao->prepare("UPDATE cars SET modelo = ?, idfabricante = ?, idveiculo = ?, anofabricacao = ? WHERE idcars = ?");
-        $stmt->execute([$dados['modelo'], $dados['fabricante'], $dados['veiculo'], $dados['ano'], $dados['id']]);
+        $stmt->execute([$cars->modelo, $cars->fabricante, $cars->veiculo, $cars->ano, $cars->id]);
         return [
             "status" => "success",
             "message" => "Carro atualizado com sucesso"

@@ -5,8 +5,9 @@ namespace Repositories;
 use PDO;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Interfaces\Repository\UserInterface;
 
-class UserRepository
+class UserRepository implements UserInterface
 {
     private PDO $conexao;
     public function __construct(PDO $conexao)

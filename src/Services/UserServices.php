@@ -1,24 +1,26 @@
 <?
 namespace Services;
 
-use Repositories\UserRepository;
+use Dtos\UserDto;
+use Interfaces\Repository\UserInterface as RepositoryUserInterface;
+use Interfaces\Services\UserInterface;
 
-class UserServices
+class UserServices implements UserInterface
 {
-    private UserRepository $usersRepository;
+    private RepositoryUserInterface $usersRepository;
 
-    public function  __construct(UserRepository $usersRepository)
+    public function  __construct(RepositoryUserInterface $usersRepository)
     {
         $this->usersRepository = $usersRepository;
     }
 
-    public function login(string $email, string $password): array{
+    public function login(UserDto $user): array{
 
-        return $this->usersRepository->login($email, $password);
+        return $this->usersRepository->login($user->email, $user->password);
     }
 
-    public function cadastro(string $nome, string $email, string $password) : array {
-        return $this->usersRepository->cadastro($nome, $email, $password);
+    public function cadastro(UserDto $user) : array {
+        return $this->usersRepository->cadastro($user->nome, $user->email, $user->password);
     }
 
 }

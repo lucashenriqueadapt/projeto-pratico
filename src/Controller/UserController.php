@@ -2,34 +2,28 @@
 
 namespace Controller;
 
-use Services\UserServices;
+use Mappers\UserMapper;
+use Interfaces\Services\UserInterface;
 
 class UserController
 {
-    private UserServices $userService;
-    public function __construct(UserServices $userService)
+    private UserInterface $userService;
+    public function __construct(UserInterface $userService)
     {
-
         $this->userService = $userService;
     }
 
 
     public function login(): array
     {
-        $dados = json_decode($_POST['dados']);
-        $email = $dados->email;
-        $password = $dados->password;
+        $user = UserMapper::assocObjDadosToUser(json_decode($_POST['dados']));
 
-
-        return $this->userService->login($email, $password);
+        return $this->userService->login($user);
     }
 
     public function cadastro(): array
     {
-        $dados = json_decode($_POST['dados']);
-        $nome = $dados->nome;
-        $email = $dados->email;
-        $password = $dados->password;
-        return $this->userService->cadastro($nome, $email, $password);
+        $user = UserMapper::assocObjDadosToUser(json_decode($_POST['dados']));
+        return $this->userService->cadastro($user);
     }
 }
