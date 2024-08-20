@@ -98,27 +98,7 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas:
 
    DELIMITER ;
    ```
-
-4. **Configuração do arquivo `.env`:**
-
-   Crie um arquivo `.env` na raiz do projeto com as seguintes configurações:
-
-   ```env
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=loja
-   DB_USERNAME=seu_usuario
-   DB_PASSWORD=sua_senha
-   ```
-
-5. **Executar o projeto:**
-
-   Agora você pode executar o servidor embutido do PHP:
-
-   ```bash
-   php -S localhost:8000 -t public
-   ```
+   
 
 ## Contribuições
 
